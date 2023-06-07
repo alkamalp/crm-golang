@@ -22,7 +22,7 @@ func (r RouteActor) Handle(routeVersion *gin.Engine) {
 	basepath := "/actor"
 	actor := routeVersion.Group(basepath)
 
-	actor.POST("", middleware.Auth,
+	actor.POST("",
 		r.ActorRequestHandeler.CreateActor,
 	)
 

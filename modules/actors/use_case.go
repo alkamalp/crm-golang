@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/alkamalp/crm-golang/entity"
+	"github.com/alkamalp/crm-golang/middleware"
 	"github.com/alkamalp/crm-golang/repository"
 )
 
@@ -22,17 +23,23 @@ type useCaseActor struct {
 func (uc useCaseActor) CreateActor(actor ActorParam) (entity.Actor, error) {
 	var newActor *entity.Actor
 
+	// Hashing password
+	hashedPassword, err := middleware.HashPassword(actor.Password)
+	if err != nil {
+		return entity.Actor{}, err
+	}
+
 	newActor = &entity.Actor{
 		Username:  actor.Username,
-		Password:  actor.Password,
-		Role_id:   actor.Role_id,
-		Verified:  actor.Verified,
-		Active:    actor.Active,
+		Password:  hashedPassword,
+		Role_id:   2,
+		Verified:  0,
+		Active:    0,
 		CreatedAt: time.Now(),
 		UpdatedAt: time.Now(),
 	}
 
-	_, err := uc.actorRepo.CreateActor(newActor)
+	_, err = uc.actorRepo.CreateActor(newActor)
 	if err != nil {
 		return *newActor, err
 	}
