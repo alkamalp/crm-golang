@@ -15,6 +15,7 @@ func NewCustomer(dbCrud *gorm.DB) Customer {
 	}
 }
 
+//go:generate mockery --name CustomerInterfaceRepo
 type CustomerInterfaceRepo interface {
 	CreateCustomer(Customer *entity.Customer) (*entity.Customer, error)
 	GetCustomerById(id uint) (entity.Customer, error)
