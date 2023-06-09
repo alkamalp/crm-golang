@@ -1,11 +1,11 @@
 # Gunakan image golang:alpine sebagai base image
-FROM golang:alpine
+FROM golang
 
 # Set working directory di dalam container
 WORKDIR /app
 
 # Salin file go.mod dan go.sum ke dalam container
-COPY go.mod go.sum ./
+COPY . .
 
 # Download dependensi Go
 RUN go mod download
